@@ -27,10 +27,16 @@
       "name": "WMC",
       "id": "wmc",
       "color": "#0c2450"
+    }, {
+      "name": "JellySkin",
+      "id": "jellyskin",
+      "color": "#0c2450"
     }
   ],
   "menuLinks": [],
-  "servers": [],
+  "servers": [
+    "http://localhost:8096"
+  ],
   "plugins": [
     "playAccessValidation/plugin",
     "experimentalWarnings/plugin",
@@ -45,6 +51,7 @@
     "logoScreensaver/plugin",
     "sessionPlayer/plugin",
     "chromecastPlayer/plugin",
-    "syncPlay/plugin"
+    "syncPlay/plugin",
+    "plexBot/plugin"
   ]
 }

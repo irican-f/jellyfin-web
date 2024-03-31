@@ -2,7 +2,8 @@ export enum PluginType {
     MediaPlayer = 'mediaplayer',
     PreplayIntercept = 'preplayintercept',
     Screensaver = 'screensaver',
-    SyncPlay = 'syncplay'
+    SyncPlay = 'syncplay',
+    Feature = 'feature'
 }
 
 export interface Plugin {

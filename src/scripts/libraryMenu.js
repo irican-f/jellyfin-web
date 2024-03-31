@@ -245,6 +245,7 @@ function bindMenuEvents() {
     headerAudioPlayerButton.addEventListener('click', showAudioPlayer);
     headerSyncButton.addEventListener('click', onSyncButtonClicked);
 
+
     if (layoutManager.mobile) {
         initHeadRoom(skinHeader);
     }
@@ -354,6 +355,17 @@ function refreshLibraryInfoInDrawer(user) {
         }
 
         html += '</div>';
+
+        if (user.localUser.Policy.EnablePlexBotAccess) {
+            html += '<div class="thirdPartyAppsOptions">';
+            html += '<h3 class="sidebarHeader">';
+            html += globalize.translate('HeaderThirdPartyApps');
+            html += '</h3>';
+
+            html += '<a is="emby-linkbutton" class="navMenuOption lnkMediaFolder btnPlexBot" data-itemid="plexbot" href="#/plexbot"><span class="material-icons navMenuOptionIcon manage_accounts" aria-hidden="true"></span><span class="navMenuOptionText">Plex Bot</span></a>';
+
+            html += '</div>';
+        }
     }
 
     // add buttons to navigation drawer
@@ -377,6 +389,11 @@ function refreshLibraryInfoInDrawer(user) {
     const btnLogout = navDrawerScrollContainer.querySelector('.btnLogout');
     if (btnLogout) {
         btnLogout.addEventListener('click', onLogoutClick);
+    }
+
+    const btnPlexBot = navDrawerScrollContainer.querySelector('.btnPlexBot');
+    if (btnPlexBot) {
+        btnPlexBot.addEventListener('click', onPlexBotButtonClick);
     }
 }
 
@@ -502,6 +519,10 @@ function onSelectServerClick() {
 
 function onSettingsClick() {
     Dashboard.navigate('mypreferencesmenu.html');
+}
+
+function onPlexBotButtonClick() {
+    Dashboard.navigate('plexbot');
 }
 
 function onExitAppClick() {

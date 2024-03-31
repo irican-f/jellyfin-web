@@ -18,12 +18,16 @@ module.exports = merge(common, {
         ]
     },
     devServer: {
+        hot: true,
         compress: true,
         client: {
             overlay: {
                 errors: true,
                 warnings: false
             }
+        },
+        devMiddleware: {
+            writeToDisk: true
         }
     }
 });
