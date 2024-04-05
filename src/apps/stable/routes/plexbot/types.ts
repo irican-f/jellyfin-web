@@ -1,16 +1,16 @@
-export interface PlexBotLinksResponse {
+export interface IPlexBotPaginatedResponse<T> {
     currentPage: number;
     totalPages: number;
     pageSize: number;
     totalCount: number;
-    items: Item[];
+    items: T[];
 }
 
-export interface Item {
+export interface ICrawlLink {
     mediaId: string;
     name: string;
     secondName: string;
-    provider: Provider;
+    provider: IProvider;
     providerId: string;
     providerItemId: string;
     providerCategory: string;
@@ -33,7 +33,7 @@ export interface Item {
     id: string;
 }
 
-export interface Provider {
+export interface IProvider {
     displayName: string;
     name: string;
     url: string;
@@ -42,15 +42,25 @@ export interface Provider {
     id: string;
 }
 
-export type TProvider = 'Tirexo' | 'Wawacity';
-// TODO  type TCategory = 'Film' | 'Serie';
-export type TStatus = 'Downloaded' | 'Extracted' | 'Planed';
+export type TCategory = 'Film' | 'Série' | 'Animé' | 'Auto';
+export type TStatus = 'Downloaded' | 'Active';
 
-export interface Data {
+export interface ICollabsibleData {
+    season: number
+    quality: string
+    version: string
+    hasError: boolean
+    url: string
+    airedEpisodesCount: number
+    totalEpisodesCount: number
+}
+
+export interface IData {
     id: string;
     name: string;
-    provider: TProvider;
+    provider: string;
     category: number;
     addedBy: string;
     status: TStatus;
+    collabsibleData: ICollabsibleData;
   }

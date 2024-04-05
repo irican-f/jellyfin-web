@@ -8,13 +8,14 @@ import {
     TableRow,
     TableCell,
     TableBody,
-    Chip,
     TableFooter
 } from '@mui/material';
 
-import { Data } from './types';
+import { IData } from './types';
 
-interface Column {
+import Row from './Row';
+
+interface IColumn {
     id: 'id' | 'name' | 'provider' | 'category' | 'addedBy' | 'status';
     label: string;
     minWidth?: number;
@@ -23,40 +24,28 @@ interface Column {
     format?: (value: string | number) => JSX.Element;
   }
 
-const columns: readonly Column[] = [
+const columns: readonly IColumn[] = [
     { id: 'id', label: 'Id', minWidth: 100, hidden: true },
     { id: 'name', label: 'Name', minWidth: 170 },
     { id: 'provider', label: 'Provider', minWidth: 100 },
     { id: 'category', label: 'Category', minWidth: 100 },
     { id: 'addedBy', label: 'Added By', minWidth: 100 },
-    {
-        id: 'status',
-        label: 'Status',
-        minWidth: 100,
-        format: (value: string | number) => {
-            switch (value) {
-                case 'Downloaded':
-                    return <Chip label='Downloaded' color={'primary'} variant='outlined'/>;
-                case 'Extracted':
-                    return <Chip label='Extracted' color={'info'} variant='outlined'/>;
-                default:
-                    return <Chip label='Unknown' color={'info'} variant='outlined'/>;
-            }
-        }
-    }
+    { id: 'status', label: 'Status', minWidth: 100 }
 ];
 
-interface TableDisplayProps {
-    rows: Data[];
+interface ITableDisplayProps {
+    rows: IData[];
     rowPerPage: number;
 }
 
-const TableDisplay: FunctionComponent<TableDisplayProps> = ({ rows, rowPerPage, children }) => {
+const TableDisplay: FunctionComponent<ITableDisplayProps> = ({ rows, rowPerPage, children }) => {
+    console.log({ rows });
     return ( <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer sx={{ maxHeight: 1000 }}>
             <Table stickyHeader aria-label='sticky table'>
                 <TableHead>
                     <TableRow>
+                        <TableCell />
                         {
                             columns
                                 .filter((col) => !col?.hidden)
@@ -76,24 +65,10 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ rows, rowPerPage, 
                         ?.slice(0, rowPerPage)
                         .map((row) => {
                             return (
-                                <TableRow hover role='checkbox' tabIndex={-1} key={row.id}>
-                                    {
-                                        columns
-                                            .filter((col) => !col?.hidden)
-                                            .map((column) => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === 'number' ?
-                                                            column.format(value) :
-                                                            value
-                                                        }
-                                                    </TableCell>
-                                                );
-                                            })}
-                                </TableRow>
+                                <Row key={row.id} row={row} />
                             );
-                        })}
+                        })
+                    }
                 </TableBody>
             </Table>
         </TableContainer>

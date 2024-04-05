@@ -11,7 +11,7 @@ import { TablePagination } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { useFetchplexBot } from 'hooks/useFetchplexBot';
 
-import { TProvider, TStatus, Data } from './types';
+import { TStatus, IData, ICollabsibleData } from './types';
 
 import Page from '../../../../components/Page';
 import TableDisplay from './TableDisplay';
@@ -22,12 +22,13 @@ import './plexbotDashboard.scss';
 function createData(
     id: string,
     name: string,
-    provider: TProvider,
+    provider: string,
     category: number,
     addedBy: string,
-    status: TStatus
-): Data {
-    return { id, name, provider, category, addedBy, status };
+    status: TStatus,
+    collabsibleData: ICollabsibleData
+): IData {
+    return { id, name, provider, category, addedBy, status, collabsibleData };
 }
 
 const convertToNumber = (value: string | number): number => {
@@ -46,10 +47,20 @@ const PlexBotDashboard: FunctionComponent = () => {
         return createData(
             item.id,
             item.name,
-            item.provider.name as TProvider,
+            item.provider.name,
             item.category,
             item.createdBy,
-            item.downloaded ? 'Downloaded' : 'Planed');
+            item.downloaded ? 'Downloaded' : 'Active',
+            {
+                season: item.season,
+                quality: item.quality,
+                version: item.version,
+                hasError: item.hasError,
+                url: item.provider.url + item.url,
+                totalEpisodesCount: item.totalEpisodesCount,
+                airedEpisodesCount: item.airedEpisodesCount
+            }
+        );
     });
 
     const handleChangePage = (event: unknown, newPage: number) => {
