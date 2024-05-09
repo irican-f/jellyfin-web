@@ -4,5 +4,6 @@ export const ASYNC_USER_ROUTES: AsyncRoute[] = [
     { path: 'quickconnect', page: 'quickConnect' },
     { path: 'search.html', page: 'search' },
     { path: 'userprofile.html', page: 'user/userprofile' },
-    { path: 'plexbot', page: 'plexbot/PlexbotDashboard' }
+    // { path: 'plexbot', page: 'plexbot/Dashboard' },
+    { path: 'plexbot', page: 'plexbot/Search' }
 ];

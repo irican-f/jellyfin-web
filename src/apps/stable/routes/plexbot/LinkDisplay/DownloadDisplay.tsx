@@ -11,13 +11,11 @@ import { TablePagination } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { useFetchplexBot } from 'hooks/useFetchplexBot';
 
-import { TStatus, IData, ICollabsibleData } from './types';
+import { TStatus, IData, ICollabsibleData } from '../types';
 
-import Page from '../../../../components/Page';
+import Page from '../../../../../components/Page';
 import TableDisplay from './TableDisplay';
 import TablePaginationActions from './PaginationAction';
-
-import './plexbotDashboard.scss';
 
 function createData(
     id: string,

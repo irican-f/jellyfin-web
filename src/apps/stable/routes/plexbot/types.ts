@@ -33,6 +33,13 @@ export interface ICrawlLink {
     id: string;
 }
 
+export interface IProviderSearch {
+    title: string;
+    description: string;
+    url: string;
+    thumbnailUrl: string;
+}
+
 export interface IProvider {
     displayName: string;
     name: string;
