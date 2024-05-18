@@ -34,6 +34,7 @@ export class ProviderApiRequestFactory extends BaseAPIRequestFactory {
         }
 
         const defaultAuth: SecurityAuthentication | undefined = _options?.authMethods?.default || this.configuration?.authMethods?.default;
+        requestContext.setHeaderParam('Authorization', _config.authString);
         if (defaultAuth?.applySecurityAuthentication) {
             await defaultAuth?.applySecurityAuthentication(requestContext);
         }

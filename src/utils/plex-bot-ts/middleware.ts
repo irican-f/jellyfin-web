@@ -1,4 +1,4 @@
-import {RequestContext, ResponseContext} from './http/http';
+import { RequestContext, ResponseContext } from './http/http';
 import { Observable, from } from './rxjsStub';
 
 /**
@@ -26,7 +26,6 @@ export interface Middleware {
 }
 
 export class PromiseMiddlewareWrapper implements Middleware {
-
     public constructor(private middleware: PromiseMiddleware) {
 
     }
@@ -38,7 +37,6 @@ export class PromiseMiddlewareWrapper implements Middleware {
     post(context: ResponseContext): Observable<ResponseContext> {
         return from(this.middleware.post(context));
     }
-
 }
 
 /**

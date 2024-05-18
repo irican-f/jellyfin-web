@@ -9,6 +9,7 @@ export interface Configuration {
     readonly httpApi: HttpLibrary;
     readonly middleware: Middleware[];
     readonly authMethods: AuthMethods;
+    readonly authString: string;
 }
 
 /**
@@ -49,6 +50,7 @@ export interface ConfigurationParameters {
      * `./auth/auth`
      */
     authMethods?: AuthMethodsConfiguration
+    authString? : string;
 }
 
 /**
@@ -70,8 +72,10 @@ export function createConfiguration(conf: ConfigurationParameters = {}): Configu
         baseServer: conf.baseServer !== undefined ? conf.baseServer : server1,
         httpApi: conf.httpApi || new DefaultHttpLibrary(),
         middleware: conf.middleware || [],
-        authMethods: configureAuthMethods(conf.authMethods)
+        authMethods: configureAuthMethods(conf.authMethods),
+        authString: conf.authString || ''
     };
+
     if (conf.promiseMiddleware) {
         conf.promiseMiddleware.forEach(
             middleware => configuration.middleware.push(new PromiseMiddlewareWrapper(middleware))
