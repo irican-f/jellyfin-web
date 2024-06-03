@@ -9,7 +9,7 @@ import React, { FunctionComponent, useEffect } from 'react';
 import { TablePagination } from '@mui/material';
 
 import { useSearchParams } from 'react-router-dom';
-import { useFetchplexBot } from 'hooks/useFetchplexBot';
+import { useFetchplexBot } from 'hooks/Plexbot/useFetchplexBot';
 
 import { TStatus, IData, ICollabsibleData } from '../types';
 

@@ -122,7 +122,8 @@
     "webcomponents.js": "0.7.24",
     "webpack-dev-middleware": "7.2.0",
     "webpack-hot-middleware": "2.26.1",
-    "whatwg-fetch": "3.6.20"
+    "whatwg-fetch": "3.6.20",
+    "@plex-bot/api": "file:local_packages/PlexBot.ApiClient"
   },
   "browserslist": [
     "last 2 Firefox versions",
