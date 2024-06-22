@@ -11,7 +11,7 @@ import {
     TableFooter
 } from '@mui/material';
 
-import { IData } from './types';
+import { IData } from '../types';
 
 import Row from './Row';
 

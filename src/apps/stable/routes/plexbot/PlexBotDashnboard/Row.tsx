@@ -17,17 +17,11 @@ import {
     Link
 } from '@mui/material';
 
+import { categories } from '../utils';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-import { IData } from './types';
-
-const Category = [
-    <div key='film'>Film</div>,
-    <div key='serie'>Série</div>,
-    <div key='anime'>Animé</div>,
-    <div key='auto'>Auto</div>
-];
+import { IData } from '../types';
 
 interface IRowProps {
     row: IData;
@@ -56,9 +50,7 @@ const Row: FunctionComponent<IRowProps> = ({ row }) => {
                     {row.provider}
                 </TableCell>
                 <TableCell component='th' scope='row'>
-                    {
-                        Category[row.category]
-                    }
+                    <div>{categories[row.category]}</div>
                 </TableCell>
                 <TableCell component='th' scope='row'>
                     {row.addedBy}
