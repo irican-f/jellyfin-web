@@ -10,8 +10,10 @@ index.ts
 models/ApiMediaSearchRequest.ts
 models/CancellationToken.ts
 models/CancellationTokenSource.ts
+models/CrawlLink.ts
 models/CrawlStatus.ts
 models/CreationOrigin.ts
+models/EntityBase.ts
 models/Exception.ts
 models/ExtractMediaConfirmationRequest.ts
 models/ExtractMediaRequest.ts
@@ -28,9 +30,10 @@ models/ISearchFilterOption.ts
 models/MediaCategory.ts
 models/MediaSearchRequest.ts
 models/MediaServerType.ts
-models/PaginatedResponseOfICrawlLink.ts
+models/PaginatedResponseOfCrawlLink.ts
 models/PaginatedResponseOfIProviderSearchItemResult.ts
 models/ProblemDetails.ts
+models/Provider.ts
 models/RenameCrawlLinkRequest.ts
 models/SafeHandle.ts
 models/SafeHandleZeroOrMinusOneIsInvalid.ts

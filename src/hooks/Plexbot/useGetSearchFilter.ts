@@ -1,35 +1,25 @@
-import { useQuery } from '@tanstack/react-query';
+import { UseMutationResult, useMutation } from '@tanstack/react-query';
+
+import { ISearchFilter, ProviderApi, ProviderGetProviderFiltersRequest } from '@plex-bot/api';
+
 import { getConfiguration } from 'utils/getConfiguration';
-import { ProviderApi, MediaCategory } from '@plex-bot/api';
 
-const fetchSearchFilters = async (
-    providerId: string,
-    mediaSearchRequest: MediaCategory
-) => {
+const fetchSearchFilters = async ({
+    providerId,
+    mediaCategory
+}: ProviderGetProviderFiltersRequest) => {
     if (!window) throw new Error('Window is not available');
-
     const configuration = getConfiguration();
 
     const apiInstance = new ProviderApi(configuration);
 
     return apiInstance.providerGetProviderFilters({
         providerId,
-        mediaCategory: mediaSearchRequest
-
-    }).then((data) => {
-        console.log({ data });
-        return data;
-    }).catch((error) => console.error(error));
-};
-
-export const useGetSearchFilters = (
-    providerId: string,
-    mediaSearchRequest: MediaCategory,
-    shouldFetch: boolean
-) => {
-    return useQuery({
-        queryKey: [ 'GetSearchFilters', providerId, mediaSearchRequest],
-        queryFn: () => fetchSearchFilters(providerId, mediaSearchRequest),
-        enabled: shouldFetch
+        mediaCategory
     });
 };
+
+export const useGetSearchFilters = (): UseMutationResult<ISearchFilter[] | void, Error, ProviderGetProviderFiltersRequest> =>
+    useMutation((request: ProviderGetProviderFiltersRequest) => fetchSearchFilters(request)
+    );
+

@@ -1,6 +1,8 @@
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
-import { getConfiguration } from 'utils/getConfiguration';
+
 import { ProviderApi, ApiMediaSearchRequest, PaginatedResponseOfIProviderSearchItemResult } from '@plex-bot/api';
+
+import { getConfiguration } from 'utils/getConfiguration';
 
 interface GetSearchParams {
     providerId: string;
@@ -10,7 +12,7 @@ interface GetSearchParams {
 const fetchSearch = async (
     providerId: string,
     query: ApiMediaSearchRequest
-): Promise<PaginatedResponseOfIProviderSearchItemResult> => {
+) => {
     if (!window) throw new Error('Window is not available');
 
     const configuration = getConfiguration();
@@ -20,12 +22,6 @@ const fetchSearch = async (
     return apiInstance.providerSearch({
         providerId,
         apiMediaSearchRequest: query
-    }).then((data) => {
-        console.log({ data });
-        return data;
-    }).catch((error) => {
-        console.error(error);
-        throw error;
     });
 };
 

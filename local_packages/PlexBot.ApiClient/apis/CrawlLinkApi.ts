@@ -15,22 +15,22 @@
 
 import * as runtime from '../runtime';
 import type {
+  CrawlLink,
   ExtractMediaConfirmationRequest,
   ExtractMediaRequest,
-  ICrawlLink,
-  PaginatedResponseOfICrawlLink,
+  PaginatedResponseOfCrawlLink,
   ProblemDetails,
   RenameCrawlLinkRequest,
 } from '../models/index';
 import {
+    CrawlLinkFromJSON,
+    CrawlLinkToJSON,
     ExtractMediaConfirmationRequestFromJSON,
     ExtractMediaConfirmationRequestToJSON,
     ExtractMediaRequestFromJSON,
     ExtractMediaRequestToJSON,
-    ICrawlLinkFromJSON,
-    ICrawlLinkToJSON,
-    PaginatedResponseOfICrawlLinkFromJSON,
-    PaginatedResponseOfICrawlLinkToJSON,
+    PaginatedResponseOfCrawlLinkFromJSON,
+    PaginatedResponseOfCrawlLinkToJSON,
     ProblemDetailsFromJSON,
     ProblemDetailsToJSON,
     RenameCrawlLinkRequestFromJSON,
@@ -67,7 +67,7 @@ export class CrawlLinkApi extends runtime.BaseAPI {
     /**
      * Adds a crawl link, it will return the extracted crawl link. You will need to confirm the link by calling the confirm-add endpoint and send the crawl link object. It allows for the third-party to edit the details of the crawl link before saving it.
      */
-    async crawlLinkAddLinkRaw(requestParameters: CrawlLinkAddLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ICrawlLink>> {
+    async crawlLinkAddLinkRaw(requestParameters: CrawlLinkAddLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CrawlLink>> {
         if (requestParameters['extractMediaRequest'] == null) {
             throw new runtime.RequiredError(
                 'extractMediaRequest',
@@ -89,13 +89,13 @@ export class CrawlLinkApi extends runtime.BaseAPI {
             body: ExtractMediaRequestToJSON(requestParameters['extractMediaRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ICrawlLinkFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => CrawlLinkFromJSON(jsonValue));
     }
 
     /**
      * Adds a crawl link, it will return the extracted crawl link. You will need to confirm the link by calling the confirm-add endpoint and send the crawl link object. It allows for the third-party to edit the details of the crawl link before saving it.
      */
-    async crawlLinkAddLink(requestParameters: CrawlLinkAddLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ICrawlLink> {
+    async crawlLinkAddLink(requestParameters: CrawlLinkAddLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CrawlLink> {
         const response = await this.crawlLinkAddLinkRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -103,7 +103,7 @@ export class CrawlLinkApi extends runtime.BaseAPI {
     /**
      * Saves a crawl link to the database, this endpoint should be called after calling the add link endpoint.
      */
-    async crawlLinkConfirmMediaExtractRaw(requestParameters: CrawlLinkConfirmMediaExtractRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ICrawlLink>> {
+    async crawlLinkConfirmMediaExtractRaw(requestParameters: CrawlLinkConfirmMediaExtractRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CrawlLink>> {
         if (requestParameters['extractMediaConfirmationRequest'] == null) {
             throw new runtime.RequiredError(
                 'extractMediaConfirmationRequest',
@@ -125,13 +125,13 @@ export class CrawlLinkApi extends runtime.BaseAPI {
             body: ExtractMediaConfirmationRequestToJSON(requestParameters['extractMediaConfirmationRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ICrawlLinkFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => CrawlLinkFromJSON(jsonValue));
     }
 
     /**
      * Saves a crawl link to the database, this endpoint should be called after calling the add link endpoint.
      */
-    async crawlLinkConfirmMediaExtract(requestParameters: CrawlLinkConfirmMediaExtractRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ICrawlLink> {
+    async crawlLinkConfirmMediaExtract(requestParameters: CrawlLinkConfirmMediaExtractRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CrawlLink> {
         const response = await this.crawlLinkConfirmMediaExtractRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -168,7 +168,7 @@ export class CrawlLinkApi extends runtime.BaseAPI {
     /**
      * Gets added crawl links, the results are paginated.
      */
-    async crawlLinkGetRaw(requestParameters: CrawlLinkGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaginatedResponseOfICrawlLink>> {
+    async crawlLinkGetRaw(requestParameters: CrawlLinkGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<PaginatedResponseOfCrawlLink>> {
         const queryParameters: any = {};
 
         if (requestParameters['page'] != null) {
@@ -188,13 +188,13 @@ export class CrawlLinkApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedResponseOfICrawlLinkFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedResponseOfCrawlLinkFromJSON(jsonValue));
     }
 
     /**
      * Gets added crawl links, the results are paginated.
      */
-    async crawlLinkGet(requestParameters: CrawlLinkGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaginatedResponseOfICrawlLink> {
+    async crawlLinkGet(requestParameters: CrawlLinkGetRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<PaginatedResponseOfCrawlLink> {
         const response = await this.crawlLinkGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -202,7 +202,7 @@ export class CrawlLinkApi extends runtime.BaseAPI {
     /**
      * Changes the name of the show for an added link.
      */
-    async crawlLinkRenameLinkRaw(requestParameters: CrawlLinkRenameLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ICrawlLink>> {
+    async crawlLinkRenameLinkRaw(requestParameters: CrawlLinkRenameLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CrawlLink>> {
         if (requestParameters['crawlLinkId'] == null) {
             throw new runtime.RequiredError(
                 'crawlLinkId',
@@ -231,13 +231,13 @@ export class CrawlLinkApi extends runtime.BaseAPI {
             body: RenameCrawlLinkRequestToJSON(requestParameters['renameCrawlLinkRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ICrawlLinkFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => CrawlLinkFromJSON(jsonValue));
     }
 
     /**
      * Changes the name of the show for an added link.
      */
-    async crawlLinkRenameLink(requestParameters: CrawlLinkRenameLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ICrawlLink> {
+    async crawlLinkRenameLink(requestParameters: CrawlLinkRenameLinkRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CrawlLink> {
         const response = await this.crawlLinkRenameLinkRaw(requestParameters, initOverrides);
         return await response.value();
     }

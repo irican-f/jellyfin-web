@@ -1,6 +1,8 @@
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { ISearchFilter } from '@plex-bot/api';
 import React, { useState } from 'react';
+
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+
+import { ISearchFilter } from '@plex-bot/api';
 
 interface FilterBuilderProps {
     setFilters: (filters: ISearchFilter[]) => void;
@@ -49,6 +51,7 @@ const FilterBuilder: React.FC<FilterBuilderProps> = ({
                             id={`filter-select-${filter.name}`}
                             value={filter.name ? handleFilterValue(filter.name) : ''}
                             label={filter.label}
+                            // eslint-disable-next-line react/jsx-no-bind
                             onChange={
                                 (event) => handleFilterChange(filter.name, filter.label, event.target.value as string)
                             }

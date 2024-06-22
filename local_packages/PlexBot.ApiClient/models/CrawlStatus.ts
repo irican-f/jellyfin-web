@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck 
 
 /**
  * PlexBot API
@@ -35,7 +36,7 @@ export type CrawlStatus = typeof CrawlStatus[keyof typeof CrawlStatus];
 export function instanceOfCrawlStatus(value: any): boolean {
     for (const key in CrawlStatus) {
         if (Object.prototype.hasOwnProperty.call(CrawlStatus, key)) {
-            if ((CrawlStatus as any)[key] === value) {
+            if (CrawlStatus[key] === value) {
                 return true;
             }
         }

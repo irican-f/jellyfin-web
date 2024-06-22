@@ -3,20 +3,16 @@ import { getConfiguration } from 'utils/getConfiguration';
 import { ProviderApi } from '@plex-bot/api';
 
 const fetchProviders = async () => {
-    if (!window) throw new Error('Window is not available');
-
     const configuration = getConfiguration();
 
     const apiInstance = new ProviderApi(configuration);
 
-    return apiInstance.providerGetAvailableProviders({ searchEnabled: true })
-        .then((data) => data)
-        .catch((error) => console.error(error));
+    return apiInstance.providerGetAvailableProviders({ searchEnabled: true });
 };
 
-export const useGetPlexBotProviders = () => {
+export const useGetProviders = () => {
     return useQuery({
-        queryKey: [ 'GetPlexBotProviders'],
+        queryKey: [ 'GetProviders'],
         queryFn: () => fetchProviders()
     });
 };

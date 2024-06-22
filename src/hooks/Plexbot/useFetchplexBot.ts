@@ -1,22 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import { IPlexBotPaginatedResponse, ICrawlLink } from 'apps/stable/routes/plexbot/types';
-
-const BASE_URL = '/plexbot/api/crawl-links';
-
-// TODO FIX
+import { getConfiguration } from 'utils/getConfiguration';
+import { CrawlLinkApi } from '@plex-bot/api';
 
 const fetchCrawlLinks = async (
     page: number,
     limit: number
 ) => {
-    if (!window) throw new Error('Window is not available');
+    const configuration = getConfiguration();
+    const apiInstance = new CrawlLinkApi(configuration);
 
-    // eslint-disable-next-line sonarjs/prefer-immediate-return
-    const response = await window.ApiClient
-        .getJSON(window.ApiClient.getUrl(`${BASE_URL}?page=${page}&limit=${limit}`), true)
-        .then((res) => res);
-
-    return response as IPlexBotPaginatedResponse<ICrawlLink>;
+    return apiInstance.crawlLinkGet({ page, limit });
 };
 
 export const useFetchplexBot = (

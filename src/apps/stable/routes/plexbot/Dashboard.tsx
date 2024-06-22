@@ -3,10 +3,13 @@
 
 import React, { FunctionComponent, useCallback } from 'react';
 
-import Page from '../../../../components/Page';
-import { Tabs, Tab } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
+import { Tabs, Tab, Box } from '@mui/material';
+
+import PlexBotDashboard from './PlexBotDashnboard/PlexbotDashboard';
 import useCurrentTab from 'hooks/useCurrentTab';
+import Page from 'components/Page';
+import Search from './Search/Search';
 
 const TabRoutes = [
     {
@@ -14,7 +17,7 @@ const TabRoutes = [
         tabs: [
             {
                 index: 0,
-                label: 'Link Display'
+                label: 'Dashboard'
             }, {
                 index: 1,
                 label: 'Search'
@@ -43,50 +46,55 @@ const Dashboard: FunctionComponent = () => {
             title='PlexBot'
             className='mainAnimatedPage libraryPage'
         >
-
-            <div className='padded-left padded-right padded-bottom-page'>
-
-                <h1>Dashboard</h1>
-                <Routes>
-                    {
-                        TabRoutes.map(route => (
-                            <Route
-                                key={route.path}
-                                path={route.path}
-                                element={
-                                    <Tabs
-                                        value={activeTab}
-                                        sx={{
-                                            width: '100%',
-                                            flexShrink: {
-                                                xs: 0,
-                                                lg: 'unset'
-                                            },
-                                            order: {
-                                                xs: 100,
-                                                lg: 'unset'
-                                            }
-                                        }}
-                                    >
-                                        {
-                                            route.tabs.map(({ index, label }) => (
-                                                <Tab
-                                                    key={`${route.path}-tab-${index}`}
-                                                    label={label}
-                                                    data-tab-index={`${index}`}
-                                                    onClick={onTabClick}
-                                                />
-                                            ))
-                                        }
-                                    </Tabs>
-                                }
-                            />
-                        ))
+            <Tabs
+                value={activeTab}
+                sx={{
+                    width: '100%',
+                    flexShrink: {
+                        xs: 0,
+                        lg: 'unset'
+                    },
+                    order: {
+                        xs: 100,
+                        lg: 'unset'
                     }
-                </Routes>
-            </div>
+                }}
+            >
+                {TabRoutes.map(route =>
+                    route.tabs.map(({ index, label }) => (
+                        <Tab
+                            key={`${route.path}-tab-${index}`}
+                            label={label}
+                            data-tab-index={`${index}`}
+                            onClick={onTabClick}
+                        />
+                    ))
+                )}
+            </Tabs>
+
+            <Routes>
+                {TabRoutes.map(route => (
+                    <Route
+                        key={route.path}
+                        path={route.path}
+                        element={
+                            <Box sx={{
+                                paddingTop:10
+                            }}>
+                                {activeTab === 0 && (
+                                    <PlexBotDashboard />
+                                )}
+                                {activeTab === 1 && (
+                                    <Search />
+                                )}
+                            </Box>
+                        }
+                    />
+                ))}
+            </Routes>
 
         </Page>
+
     );
 };
 

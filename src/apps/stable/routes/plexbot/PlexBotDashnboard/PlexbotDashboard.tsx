@@ -2,10 +2,6 @@
 /* eslint-disable react/jsx-no-bind */
 
 import React, { FunctionComponent, useEffect } from 'react';
-
-// TODO Trad
-// import globalize from '../../../../scripts/globalize';
-
 import { TablePagination } from '@mui/material';
 
 import { useSearchParams } from 'react-router-dom';
@@ -13,7 +9,6 @@ import { useFetchplexBot } from 'hooks/Plexbot/useFetchplexBot';
 
 import { TStatus, IData, ICollabsibleData } from '../types';
 
-import Page from '../../../../../components/Page';
 import TableDisplay from './TableDisplay';
 import TablePaginationActions from './PaginationAction';
 
@@ -40,23 +35,24 @@ const PlexBotDashboard: FunctionComponent = () => {
     const [rowsPerPage, setRowsPerPage] = React.useState(convertToNumber(searchParams.get('rowsPerPage') as string) || 25);
 
     const { data: plexLinks, isLoading } = useFetchplexBot(page, rowsPerPage);
+    console.log({ plexLinks });
 
-    const rows = plexLinks?.items.map((item) => {
+    const rows = plexLinks?.items?.map((item) => {
         return createData(
-            item.id,
-            item.name,
-            item.provider.name,
-            item.category,
-            item.createdBy,
+            item?.id || '',
+            item?.name || '',
+            item.provider?.name || '',
+            item.category || 0,
+            item.createdBy || '',
             item.downloaded ? 'Downloaded' : 'Active',
             {
-                season: item.season,
-                quality: item.quality,
-                version: item.version,
-                hasError: item.hasError,
-                url: item.provider.url + item.url,
-                totalEpisodesCount: item.totalEpisodesCount,
-                airedEpisodesCount: item.airedEpisodesCount
+                season: item.season || 0,
+                quality: item.quality || '',
+                version: item.version || '',
+                hasError: item.hasError || false,
+                url: item?.provider?.url ? item.provider.url + item.url : '',
+                totalEpisodesCount: item.totalEpisodesCount || 0,
+                airedEpisodesCount: item.airedEpisodesCount || 0
             }
         );
     });
@@ -80,37 +76,32 @@ const PlexBotDashboard: FunctionComponent = () => {
     }, [page, rowsPerPage, searchParams, setSearchParams]);
 
     return (
-        <Page
-            id='plexBotIndexPage'
-            title='PlexBot'
-            className='mainAnimatedPage libraryPage backdropPage collectionEditorPage pageWithAbsoluteTabs withTabs'
-        >
-            <div className='padded-left padded-right padded-bottom-page'>
 
-                <h1>Plexbot</h1>
+        <div className='padded-left padded-right padded-bottom-page'>
 
-                { isLoading && <div>Loading...</div>}
+            <h1>DashBoard</h1>
 
-                { !isLoading && plexLinks && rows && (
-                    <TableDisplay
-                        rows={rows}
-                        rowPerPage={rowsPerPage}
-                    >
+            { isLoading && <div>Loading...</div>}
 
-                        <TablePagination
-                            rowsPerPageOptions={[10, 25, 50, 100]}
-                            colSpan={3}
-                            count={plexLinks.totalPages}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                            ActionsComponent={TablePaginationActions}
-                        />
-                    </TableDisplay>
-                )}
-            </div>
-        </Page>
+            { !isLoading && plexLinks && plexLinks.totalPages && rows && (
+                <TableDisplay
+                    rows={rows}
+                    rowPerPage={rowsPerPage}
+                >
+
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 50, 100]}
+                        colSpan={3}
+                        count={plexLinks.totalPages}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                        ActionsComponent={TablePaginationActions}
+                    />
+                </TableDisplay>
+            )}
+        </div>
     );
 };
 
